@@ -2,13 +2,26 @@ var app = angular.module('testApp', ['angularGrid']);
 
 app.controller('appController', function($scope, apiService) {
     $scope.search = '';
+    var page = 1;
+    $scope.allData = [];
+    $scope.images = [];
     $scope.loadData = function(){
-        apiService.getJsonData().then(function(data){
+        apiService.getJsonData(page).then(function(data){
             $scope.title = data.page.title;
-            $scope.allData = data.page.contentitems.content;
-            $scope.images = data.page.contentitems.content;
+            $scope.allData = $scope.allData.concat(data.page.contentitems.content);
+            $scope.images = $scope.images.concat(data.page.contentitems.content);
+
         });
     };
+
+    window.addEventListener("scroll", function (event) {
+        var scroll = this.scrollY;
+        var w = window.innerHeight;
+        if(scroll > w){
+            page = page+1;
+            if(page<4)$scope.loadData()
+        }
+    });
     
     $scope.changeSearch = function(){
         $scope.images = [];
@@ -24,11 +37,28 @@ app.controller('appController', function($scope, apiService) {
 });
 
 app.service('apiService', function($http, $q) {
-    this.getJsonData = function () {
+    this.getJsonData = function (num) {
         var d = $q.defer();
-        $http.get("API/CONTENTLISTINGPAGE-PAGE1.json").then(function (res) {
+        $http.get("API/CONTENTLISTINGPAGE-PAGE"+num+".json").then(function (res) {
             d.resolve(res.data)
         });
         return d.promise;
     }
 });
+
+app.directive("whenScrolled", function(){
+    return function(scope, elem, attr){
+      
+        // we get a list of elements of size 1 and need the first element
+       var raw = elem[0];
+      console.log(raw, attr.whenScrolled, elem)
+        // we load more elements when scrolled past a limit
+        elem.bind("scroll", function(){
+            alert()
+          if(raw.scrollTop+raw.offsetHeight >= raw.scrollHeight){
+          // we can give any function which loads more elements into the list
+            scope.$apply(attr.whenScrolled);
+          }
+        });
+      }
+  });
