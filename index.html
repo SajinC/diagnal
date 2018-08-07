@@ -3,11 +3,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
     <link rel="stylesheet" href="styles.css" />
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="app.js"></script>
     <script src="angulargrid.min.js"></script>
-    <!-- <script src="infinite-scroll.js"></script> -->
     <body ng-controller="appController">
         <header>
             <img src="Slices/Back.png"/>
@@ -27,13 +25,13 @@
                     <span class="diva">
                             <img ng-src="Slices/{{images[$index + 1].src}}" class="img" width="32%"  ng-if="$index + 1 < images.length"/>
                             <div class="text-block"> 
-                                    <p>{{images[$index+1].name}}</p>
+                                    <p ng-class="{'small': images[$index].name.length>20}">{{images[$index+1].name}}</p>
                                   </div>
                     </span>
                     <span class="diva">
                             <img ng-src="Slices/{{images[$index + 2].src}}" class="img" width="32%" ng-if="$index + 2 < images.length"/>
                             <div class="text-block"> 
-                                    <p>{{images[$index+2].name}}</p>
+                                    <p ng-class="{'small': images[$index].name.length>20}">{{images[$index+2].name}}</p>
                                   </div>
                     </span>
                 </div>
