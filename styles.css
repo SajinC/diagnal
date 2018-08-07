@@ -127,7 +127,7 @@ body{
 @media only screen and (max-width: 1300px) and (min-width: 1250px) {
     .text-block {top: 276PX;}
 }
-@media only screen and (max-width: 1350px) and (min-width: 1300px) {
+@media screen and (min-width: 1300px) {
     .text-block {top: 341PX; font-size: 25px;}
 }
 
